@@ -11,7 +11,7 @@ app.get('/api/imagesearch/:search', (req, res) => {
   });
   search(term, +req.query.offset)
   .then(data => {
-    res.send(JSON.stringify(data));
+    res.send(data);
   })
   .catch(err => {
     console.log(err);
@@ -20,10 +20,7 @@ app.get('/api/imagesearch/:search', (req, res) => {
 });
 
 app.get('/api/latest/imagesearch/', (req, res) => {
-  res.send(latest.map(l => ({
-    term: l.term,
-    when: l.when.toJSON()
-  })));
+  res.send(latest.slice(-10));
 });
 
 const server = app.listen(process.env.PORT || 8080, () => {
