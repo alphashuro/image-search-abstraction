@@ -2,8 +2,13 @@ const app = require('express')();
 const search = require('./search-images');
 
 app.get('/api/imagesearch/:search', (req, res) => {
-  search(req.query.search).then(data => {
-    res.send(data);
+  // const offset = req.query.offset ? JSON.parse(req.query.offset) : 1;
+  search(req.params.search, +req.query.offset)
+  .then(data => {
+    res.send(JSON.stringify(data));
+  })
+  .catch(err => {
+    console.log(err);
   });
 });
 
